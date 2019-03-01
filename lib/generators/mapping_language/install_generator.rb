@@ -1,4 +1,5 @@
 require 'rails/generators'
+require 'rails/generators/migration'
 module MappingLanguage
   module Generators
     class InstallGenerator < Rails::Generators::Base
