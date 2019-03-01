@@ -3,14 +3,16 @@ class LangMapping < <%= ActiveRecord::Migration.current_version.to_f > 5 ? Appli
 
   class << self
     def get_lang_field(obj, field)
-      return obj.attributes[field.to_s] if Current.user_lang == 'zh-cn'
-      get_lang_mapping(obj, field)
+      lang = Current.user.language.downcase
+      return obj.attributes[field.to_s] if lang == 'zh-cn'
+      get_lang_mapping(obj, field, lang)
     end
 
-    def get_lang_mapping(obj, field)
-      lang_cache = Rails.cache.fetch("#{obj.class}_#{obj.id}_#{field}_#{Current.user_lang}") do
+    def get_lang_mapping(obj, field, lang)
+      # TODO 不系统获取当前用户方式不一致，需要安装后修改
+      lang_cache = Rails.cache.fetch("#{obj.class}_#{obj.id}_#{field}_#{Current.user.language}") do
         lang_mapping_field = obj.lang_mappings.find_by(field: field.to_s)
-        lang_mapping_field.send("#{I18n.locale}".downcase) if lang_mapping_field
+        lang_mapping_field.send(lang) if lang_mapping_field
       end
       return obj.attributes[field.to_s] if lang_cache.blank?
       lang_cache

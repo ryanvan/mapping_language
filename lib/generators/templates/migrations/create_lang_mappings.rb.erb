@@ -1,6 +1,6 @@
 class CreateLangMappings < ActiveRecord::Migration[<%= ActiveRecord::Migration.current_version.to_s %>]
-  def self.up
-    create_table :active_admin_comments do |t|
+  def change
+    create_table :lang_mappings do |t|
       t.string :field
       t.references :kclass, polymorphic: true
       t.string :en
@@ -8,10 +8,6 @@ class CreateLangMappings < ActiveRecord::Migration[<%= ActiveRecord::Migration.c
 
       t.timestamps
     end
-    add_index :active_admin_comments, [:namespace]
-  end
-
-  def self.down
-    drop_table :active_admin_comments
+    add_index(:lang_mappings, [:field, :kclass_type, :kclass_id], name: 'lang_mapping_field')
   end
 end
