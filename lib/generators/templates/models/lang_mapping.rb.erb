@@ -9,7 +9,7 @@ class LangMapping < <%= ActiveRecord::Migration.current_version.to_f > 5 ? Appli
     end
 
     def get_lang_mapping(obj, field, lang)
-      # TODO 不系统获取当前用户方式不一致，需要安装后修改
+      # TODO 不系统获取当前用户方式和cache都不一样，需要安装后修改
       lang_cache = Rails.cache.fetch("#{obj.class}_#{obj.id}_#{field}_#{Current.user.language}") do
         lang_mapping_field = obj.lang_mappings.find_by(field: field.to_s)
         lang_mapping_field.send(lang) if lang_mapping_field

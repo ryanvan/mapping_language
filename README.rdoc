@@ -1,3 +1,10 @@
 = MappingLanguage
 
+  === Installation:
+    Add this line to your application's Gemfile
+      gem 'mapping_language', git: 'https://github.com/ryanvan/mapping_language.git', branch: 'master'
+
+  === Install a generator
+    rails generate mapping_language:install NAME [options]
+
 This project rocks and uses MIT-LICENSE.
