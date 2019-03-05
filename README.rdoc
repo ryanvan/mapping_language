@@ -11,7 +11,8 @@
     e.g. :
       In model
        class Xxxx < ApplicationRecord
-         acts_as_lang_mapping :parent_cate, :cate, :info # need to translate field
+         # need to translate field and language
+         acts_as_lang_mapping :parent_cate, :cate, :info, langauge: Proc.new{ User.current.language }
        end
 
 
