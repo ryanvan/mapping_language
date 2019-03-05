@@ -1,4 +1,4 @@
-class AddColumnLanguageToUser < ActiveRecord::Migration[<%= ActiveRecord::Migration.current_version.to_s %>]
+class AddColumnLanguageToUser < ActiveRecord::Migration<%= ActiveRecord::VERSION::STRING.to_f > 5 ? "[#{ActiveRecord::Migration.current_version.to_s}]" : ''%>
   def change
     add_column :users, :language, :string, limit: 15, default: 'zh-CN'
   end

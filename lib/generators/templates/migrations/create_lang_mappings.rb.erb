@@ -1,10 +1,10 @@
-class CreateLangMappings < ActiveRecord::Migration[<%= ActiveRecord::Migration.current_version.to_s %>]
+class CreateLangMappings < ActiveRecord::Migration<%= ActiveRecord::VERSION::STRING.to_f > 5 ? "[#{ActiveRecord::Migration.current_version.to_s}]" : ''%>
   def change
     create_table :lang_mappings do |t|
       t.string :field
       t.references :kclass, polymorphic: true
       t.string :en
-      t.string :zh-cn
+      t.string 'zh-cn'
 
       t.timestamps
     end

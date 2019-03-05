@@ -1,16 +1,15 @@
-class LangMapping < <%= ActiveRecord::Migration.current_version.to_f > 5 ? ApplicationRecord : ActiveRecord::Base %>
+class LangMapping < <%= ActiveRecord::VERSION::STRING.to_f > 5 ? ApplicationRecord : ActiveRecord::Base %>
   belongs_to :kclass, polymorphic: true
 
   class << self
-    def get_lang_field(obj, field)
-      lang = Current.user.language.downcase
-      return obj.attributes[field.to_s] if lang == 'zh-cn'
+    def get_lang_field(obj, lang_proc, field)
+      lang = lang_proc.call
+      return obj.attributes[field.to_s] if lang.downcase.include?('zh')
       get_lang_mapping(obj, field, lang)
     end
 
     def get_lang_mapping(obj, field, lang)
-      # TODO 不系统获取当前用户方式和cache都不一样，需要安装后修改
-      lang_cache = Rails.cache.fetch("#{obj.class}_#{obj.id}_#{field}_#{Current.user.language}") do
+      lang_cache = Rails.cache.fetch("#{obj.class}_#{obj.id}_#{field}_#{lang}") do
         lang_mapping_field = obj.lang_mappings.find_by(field: field.to_s)
         lang_mapping_field.send(lang) if lang_mapping_field
       end

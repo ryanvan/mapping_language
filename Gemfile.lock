@@ -1,0 +1,17 @@
+PATH
+  remote: .
+  specs:
+    mapping_language (0.0.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  mapping_language!
+
+BUNDLED WITH
+   1.12.5
